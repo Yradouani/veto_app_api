@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ClientController extends Controller
 {
@@ -38,5 +40,38 @@ class ClientController extends Controller
         } catch (Exception $e) {
             echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
         }
+    }
+
+    //Récupérer tous les clients d'un vétérinaire donné
+    public function getAllClientsOfOneVeterinary($id)
+    {
+        try {
+            // $client = Client::where("veterinary_id", $id)->get();
+            // $client = Client::whereHas("veterinary_id", $veterinary_id)->get();
+            // $client = Client::find($id);
+
+
+            $client = DB::table("clients")
+                ->join("veterinaire", "clients.veterinary_id", "=", "veterinaire.id")
+                ->select("clients.*")
+                ->where("clients.veterinary_id", "=", $id)
+                ->get();
+
+            return $client;
+            // return response($client, 201);
+        } catch (Exception $e) {
+            echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
+        }
+    }
+
+    public function getOneClient(Client $id)
+    {
+        try {
+            $client = Client::find($id)->last();
+            // $client = Client::where('id', $id)->get();
+        } catch (Exception $e) {
+            echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
+        }
+        return $client;
     }
 }

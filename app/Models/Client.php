@@ -12,6 +12,10 @@ class Client extends Model
 {
     use HasFactory, HasApiTokens, Notifiable;
 
+    public function veterinary()
+    {
+        return $this->belongsTo('App\Models\User', 'veterinary_id');
+    }
     protected $table = 'clients';
 
     protected $fillable = [

@@ -21,7 +21,9 @@ Route::get("/user/veterinary", [UserController::class, "getAllVeterinary"]);
 
 //Route concernant les clients
 Route::post("/user/client", [ClientController::class, "addNewClient"]);
+Route::get("/user/client/{id}", [ClientController::class, "getOneClient"]);
 Route::get("/user/clients", [ClientController::class, "getAllClients"]);
+Route::get("user/veterinary/{id}/clients", [ClientController::class, "getAllClientsOfOneVeterinary"]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
