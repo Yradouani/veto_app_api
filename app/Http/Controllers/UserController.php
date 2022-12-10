@@ -56,4 +56,22 @@ class UserController extends Controller
             "token" => $token
         ], 200);
     }
+
+    //Récupérer les informations du vétérinaire connecté
+    public function getOneVeterinary(User $id)
+    {
+        // $request->headers->set('Accept', 'application/json');
+
+        return User::find($id);
+    }
+
+    //Récupérer les informations de tous les vétérinaires
+    public function getAllVeterinary()
+    {
+        $veterinary = User::all();
+        if (count($veterinary) <= 0) {
+            return response(["message" => "aucun vétérinaire inscrit"], 200);
+        }
+        return response($veterinary, 200);
+    }
 }

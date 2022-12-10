@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('pwd');
             // $table->boolean('isVet');
+            $table->integer('isClient')->default('0')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,5 +36,12 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('veterinaire');
+
+        // Schema::table('veterinaire', function (Blueprint $table) {
+
+
+        //     // 2. Drop the column
+        //     $table->dropColumn('isClient');
+        // });
     }
 };

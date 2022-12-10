@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('firstname');
             $table->string('lastname');
-            $table->timestamp('address');
+            $table->string('address');
             $table->string('email')->unique();
             $table->string('phone');
             $table->string('pwd');
-            $table->boolean('isClient')->default('true');
-            $table->integer('veterinary_id')->unsigned()->index()->nullable();
+            $table->integer('isClient')->default('1');
+            $table->unsignedBigInteger('veterinary_id');
             $table->foreign('veterinary_id')->references('id')->on('veterinaire')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
