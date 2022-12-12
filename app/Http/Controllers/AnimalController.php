@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Animal;
 use App\Http\Requests\StoreAnimalRequest;
 use App\Http\Requests\UpdateAnimalRequest;
+use Exception;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\DB;
 
 class AnimalController extends Controller
 {
@@ -13,9 +16,20 @@ class AnimalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getAllAnimalsOfOneVeterinary($id)
     {
-        //
+        //Récupérer tous les animaux d'un vétérinaire
+        try {
+            $animals = DB::table("animals")
+                ->join("veterinaire", "animals.veterinary_id", "=", "veterinaire.id")
+                ->select("animals.*")
+                ->where("animals.veterinary_id", "=", $id)
+                ->get();
+
+            return $animals;
+        } catch (Exception $e) {
+            echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
+        }
     }
 
     /**
@@ -79,7 +93,7 @@ class AnimalController extends Controller
      * @param  \App\Models\Animal  $animal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Animal $animal)
+    public function deleteAnimal(Request $request, $id)
     {
         //
     }

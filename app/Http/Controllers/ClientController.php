@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use Error;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class ClientController extends Controller
                 "veterinary_id" => $clientData["veterinary_id"]
             ]);
             return response($client, 201);
-        } catch (Exception $e) {
+        } catch (Error $e) {
             echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
         }
     }
@@ -73,5 +74,9 @@ class ClientController extends Controller
             echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
         }
         return $client;
+    }
+
+    public function deleteClient(Client $client)
+    {
     }
 }

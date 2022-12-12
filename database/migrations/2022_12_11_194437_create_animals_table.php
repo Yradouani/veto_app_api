@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('animals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('type');
             $table->date('date_of_birth');
             $table->string('sexe');
             $table->unsignedBigInteger('veterinary_id');
