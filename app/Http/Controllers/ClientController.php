@@ -76,7 +76,26 @@ class ClientController extends Controller
         return $client;
     }
 
-    public function deleteClient(Client $client)
+    public function deleteClient(Request $request, $id)
     {
+        try {
+            $request->headers->set('Accept', 'application/json');
+            // $clientValidation = $request->validate([
+            //     "id" => ["required"]
+            // ]);
+
+            $client = Client::find($id);
+            if (!$client) {
+                return response(["message" => "aucun client de trouver avec cet id $id"], 404);
+            }
+            // elseif ($client->veterinary_id !== $clientValidation["veterinary_id"]) {
+            //     return response(["message" => "action interdite"], 403);
+            // }
+
+            Client::destroy($id);
+            return response(["message" => "client supprimé"], 200);
+        } catch (Error $e) {
+            echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
+        }
     }
 }

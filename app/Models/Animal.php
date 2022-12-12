@@ -15,6 +15,8 @@ class Animal extends Model
         'type',
         'date_of_birth',
         'sexe',
+        'weight',
+        'size',
         'veterinary_id',
         'client_id'
     ];

@@ -27,7 +27,10 @@ Route::get("user/veterinary/{id}/clients", [ClientController::class, "getAllClie
 Route::delete("/client/{id}", [ClientController::class, "deleteClient"]);
 
 //Route concernant les animaux
+Route::get("/animal/{id}", [AnimalController::class, "getOneAnimal"]);
 Route::get("/user/veterinary/{id}/animals", [AnimalController::class, "getAllAnimalsOfOneVeterinary"]);
+Route::get("user/client/{id}/animals", [AnimalController::class, "getAllAnimalsOfOneClient"]);
+Route::post("/animal", [AnimalController::class, "addNewAnimal"]);
 Route::delete("/animal/{id}", [AnimalController::class, "deleteAnimal"]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
