@@ -98,4 +98,8 @@ class ClientController extends Controller
             echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
         }
     }
+
+    public function getClientOfOneAnimal($id)
+    {
+    }
 }
