@@ -44,7 +44,7 @@ class AnimalController extends Controller
                 ->get();
 
             return $animals;
-        } catch (Exception $e) {
+        } catch (Error $e) {
             echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
         }
     }

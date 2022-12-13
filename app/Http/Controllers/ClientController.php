@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -34,7 +35,7 @@ class ClientController extends Controller
                 "address" => $clientData["address"],
                 "email" => $clientData["email"],
                 "phone" => $clientData["phone"],
-                "pwd" => $clientData["pwd"],
+                "pwd" => bcrypt($clientData["pwd"]),
                 "veterinary_id" => $clientData["veterinary_id"]
             ]);
             return response($client, 201);
@@ -97,9 +98,5 @@ class ClientController extends Controller
         } catch (Error $e) {
             echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
         }
-    }
-
-    public function getClientOfOneAnimal($id)
-    {
     }
 }

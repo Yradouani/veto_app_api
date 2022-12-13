@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\User;
 use Error;
 use Illuminate\Http\Request;
@@ -43,7 +44,32 @@ class UserController extends Controller
         ]);
 
         $user = User::where("email", $userData["email"])->first();
-        if (!$user) return response(["message" => "aucun utilisateur de trouver avec l'email suivant $userData[email]"], 401);
+        if (!$user) {
+            try {
+                $request->headers->set('Accept', 'application/json');
+                $clientData = $request->validate([
+                    "email" => ["required", "email"],
+                    "pwd" => ["required", "string", "min:8"]
+                ]);
+
+                $client = Client::where("email", $clientData["email"])->first();
+                if (!$client) return response(["message" => "aucun client de trouver avec l'email suivant $clientData[email]"], 401);
+                if (!Hash::check($clientData["pwd"], $client->pwd)) {
+                    return response(["message" => "le mot de passe ne correspond pas"], 401);
+                }
+
+                //Création d'un token d'authentification
+                $token = $client->createToken("SECRET_KEY")->plainTextToken;
+
+                return response([
+                    "user" => $client,
+                    "token" => $token
+                ], 200);
+            } catch (Error $e) {
+                echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
+            }
+        }
+
         if (!Hash::check($userData["pwd"], $user->pwd)) {
             return response(["message" => "le mot de passe ne correspond pas"], 401);
         }
