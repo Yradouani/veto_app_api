@@ -151,16 +151,17 @@ class AnimalController extends Controller
     {
         //
         try {
-            $animalValidation = $request->validate([
-                "veterinary_id" => ["required", "numeric"]
-            ]);
+            // $animalValidation = $request->validate([
+            //     "veterinary_id" => ["required", "numeric"]
+            // ]);
 
             $animal = Animal::find($id);
             if (!$animal) {
                 return response(["message" => "aucune voiture de trouver avec cet id $id"], 404);
-            } elseif ($animal->veterinary_id !== $animalValidation["veterinary_id"]) {
-                return response(["message" => "action interdite"], 403);
             }
+            // elseif ($animal->veterinary_id !== $animalValidation["veterinary_id"]) {
+            //     return response(["message" => "action interdite"], 403);
+            // }
 
             Animal::destroy($id);
             return response(["message" => "animal supprimé"], 200);

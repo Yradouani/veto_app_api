@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ Route::post("/user/login", [UserController::class, "login"]);
 //Route d'acces aux informations du vétérinaire connecté
 Route::get("/user/veterinary/{id}", [UserController::class, "getOneVeterinary"]);
 Route::get("/user/veterinary", [UserController::class, "getAllVeterinary"]);
+Route::get("/user/client/{id}/veterinary", [UserController::class, "getVeterinaryOfOneClient"]);
 
 //Route concernant les clients
 Route::post("/user/client", [ClientController::class, "addNewClient"]);
@@ -32,6 +34,9 @@ Route::get("/user/veterinary/{id}/animals", [AnimalController::class, "getAllAni
 Route::get("user/client/{id}/animals", [AnimalController::class, "getAllAnimalsOfOneClient"]);
 Route::post("/animal", [AnimalController::class, "addNewAnimal"]);
 Route::delete("/animal/{id}", [AnimalController::class, "deleteAnimal"]);
+
+//Routes concernant les rendez-vous
+Route::get("/user/client/{id}/appointment", [AppointmentController::class, "getAppointmentOfOneClient"]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
