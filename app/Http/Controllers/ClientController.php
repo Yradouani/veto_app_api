@@ -99,4 +99,32 @@ class ClientController extends Controller
             echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
         }
     }
+    public function updateClient(Request $request, $id)
+    {
+        try {
+            $request->headers->set('Accept', 'application/json');
+            $clientValidation = $request->validate([
+                "firstname" => ["string", "min:3", "max:23"],
+                "lastname" => ["string", "min:3", "max:23"],
+                "address" => ["string"],
+                "email" => ["email"],
+                "phone" => ["string"],
+                "pwd" => ["string", "min:8"],
+                "veterinary_id" => ["required"]
+            ]);
+
+            $client = Client::find($id);
+            if (!$client) {
+                return response(["message" => "aucun client de trouvé avec cet id $id"], 404);
+            }
+            // elseif ($client->veterinary_id !== $clientValidation["veterinary_id"]) {
+            //     return response(["message" => "action interdite"], 403);
+            // }
+
+            $client->update($clientValidation);
+            return response($client, 201);
+        } catch (Error $e) {
+            echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
+        }
+    }
 }

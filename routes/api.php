@@ -27,6 +27,7 @@ Route::get("/user/client/{id}", [ClientController::class, "getOneClient"]);
 Route::get("/user/clients", [ClientController::class, "getAllClients"]);
 Route::get("user/veterinary/{id}/clients", [ClientController::class, "getAllClientsOfOneVeterinary"]);
 Route::delete("/client/{id}", [ClientController::class, "deleteClient"]);
+Route::put("/client/{id}", [ClientController::class, "updateClient"]);
 
 //Route concernant les animaux
 Route::get("/animal/{id}", [AnimalController::class, "getOneAnimal"]);
@@ -34,6 +35,7 @@ Route::get("/user/veterinary/{id}/animals", [AnimalController::class, "getAllAni
 Route::get("user/client/{id}/animals", [AnimalController::class, "getAllAnimalsOfOneClient"]);
 Route::post("/animal", [AnimalController::class, "addNewAnimal"]);
 Route::delete("/animal/{id}", [AnimalController::class, "deleteAnimal"]);
+Route::put("/animal/{id}", [AnimalController::class, "updateAnimal"]);
 
 //Routes concernant les rendez-vous
 Route::get("/user/client/{id}/appointment", [AppointmentController::class, "getAppointmentOfOneClient"]);

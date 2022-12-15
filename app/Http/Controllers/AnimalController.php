@@ -136,9 +136,32 @@ class AnimalController extends Controller
      * @param  \App\Models\Animal  $animal
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAnimalRequest $request, Animal $animal)
+    public function updateAnimal(Request $request, $id)
     {
-        //
+        try {
+            $request->headers->set('Accept', 'application/json');
+            $animalValidation = $request->validate([
+                "name" => ["string", "min:3", "max:23"],
+                "sexe" => ["string"],
+                "weight" => ["string"],
+                "size" => ["string"],
+                "veterinary_id" => ["required"],
+                "client_id" => ["required"]
+            ]);
+
+            $animal = Animal::find($id);
+            if (!$animal) {
+                return response(["message" => "aucun animal de trouvé avec cet id $id"], 404);
+            }
+            // elseif ($client->veterinary_id !== $clientValidation["veterinary_id"]) {
+            //     return response(["message" => "action interdite"], 403);
+            // }
+
+            $animal->update($animalValidation);
+            return response($animal, 201);
+        } catch (Error $e) {
+            echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
+        }
     }
 
     /**
