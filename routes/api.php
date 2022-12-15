@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
@@ -41,6 +42,9 @@ Route::put("/animal/{id}", [AnimalController::class, "updateAnimal"]);
 
 //Routes concernant les rendez-vous
 Route::get("/user/client/{id}/appointment", [AppointmentController::class, "getAppointmentOfOneClient"]);
+
+//Route pour l'envoi de mail
+Route::post('/send', [MailController::class, "index"]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
