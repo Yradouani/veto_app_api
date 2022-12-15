@@ -101,4 +101,32 @@ class UserController extends Controller
         }
         return response($veterinary, 200);
     }
+
+    //Modifier les informations d'un vétérinaire
+    public function updateVeterinary(Request $request, $id)
+    {
+        try {
+            $request->headers->set('Accept', 'application/json');
+            $veterinaryValidation = $request->validate([
+                "firstname" => ["string", "min:3", "max:23"],
+                "lastname" => ["string", "min:3", "max:23"],
+                "email" => ["email"],
+                "siret" => ["string"],
+                "veterinary_id" => ["required"]
+            ]);
+
+            $veterinary = User::find($id);
+            if (!$veterinary) {
+                return response(["message" => "aucun vétérinaire de trouvé avec cet id $id"], 404);
+            }
+            // elseif ($client->veterinary_id !== $clientValidation["veterinary_id"]) {
+            //     return response(["message" => "action interdite"], 403);
+            // }
+
+            $veterinary->update($veterinaryValidation);
+            return response($veterinary, 201);
+        } catch (Error $e) {
+            echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
+        }
+    }
 }

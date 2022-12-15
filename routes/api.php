@@ -4,6 +4,7 @@ use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
+use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::post("/user/login", [UserController::class, "login"]);
 Route::get("/user/veterinary/{id}", [UserController::class, "getOneVeterinary"]);
 Route::get("/user/veterinary", [UserController::class, "getAllVeterinary"]);
 Route::get("/user/client/{id}/veterinary", [UserController::class, "getVeterinaryOfOneClient"]);
+Route::put("/veterinary/{id}", [UserController::class, "updateVeterinary"]);
 
 //Route concernant les clients
 Route::post("/user/client", [ClientController::class, "addNewClient"]);
