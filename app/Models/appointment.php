@@ -16,6 +16,7 @@ class appointment extends Model
         'isVaccin',
         'date_of_appointment',
         'veterinary_id',
-        'animal_id'
+        'animal_id',
+        'client_id'
     ];
 }

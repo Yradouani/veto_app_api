@@ -31,6 +31,7 @@ Route::get("/user/clients", [ClientController::class, "getAllClients"]);
 Route::get("user/veterinary/{id}/clients", [ClientController::class, "getAllClientsOfOneVeterinary"]);
 Route::delete("/client/{id}", [ClientController::class, "deleteClient"]);
 Route::put("/client/{id}", [ClientController::class, "updateClient"]);
+Route::put("/user/client/{id}", [ClientController::class, "changePassword"]);
 
 //Route concernant les animaux
 Route::get("/animal/{id}", [AnimalController::class, "getOneAnimal"]);
@@ -44,6 +45,7 @@ Route::put("/animal/{id}", [AnimalController::class, "updateAnimal"]);
 Route::get("/user/client/{id}/appointment", [AppointmentController::class, "getAppointmentOfOneClient"]);
 Route::post("/appointments", [AppointmentController::class, "createAppointment"]);
 Route::get("/animal/{id}/appointment/vaccine", [AppointmentController::class, "getLastVaccineAppointment"]);
+Route::get("/user/client/{id}/appointment", [AppointmentController::class, "getAllAppointmentsOfOneClient"]);
 
 //Route pour l'envoi de mail
 Route::post('/send', [MailController::class, "index"]);

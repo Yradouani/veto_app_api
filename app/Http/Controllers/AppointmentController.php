@@ -34,7 +34,8 @@ class AppointmentController extends Controller
                 "isVaccin" => ["required", "boolean"],
                 "date_of_appointment" => ["required", "string"],
                 "veterinary_id" => ["required"],
-                "animal_id" => ["required"]
+                "animal_id" => ["required"],
+                "client_id" => ["required"]
             ]);
 
             $appointment = appointment::create([
@@ -42,7 +43,8 @@ class AppointmentController extends Controller
                 "isVaccin" => $appointmentData["isVaccin"],
                 "date_of_appointment" => $appointmentData["date_of_appointment"],
                 "veterinary_id" => $appointmentData["veterinary_id"],
-                "animal_id" => $appointmentData["animal_id"]
+                "animal_id" => $appointmentData["animal_id"],
+                "client_id" => $appointmentData["client_id"]
             ]);
             return response($appointment, 201);
         } catch (Error $e) {
@@ -66,15 +68,19 @@ class AppointmentController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\appointment  $appointment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(appointment $appointment)
+    //Obtenir tous les rendez-vous d'un client
+    public function getAllAppointmentsOfOneClient($id)
     {
-        //
+        try {
+            $lastVaccine = DB::table("appointments")
+                ->select("appointments.*")
+                ->where("client_id", $id)
+                ->get();
+
+            return $lastVaccine;
+        } catch (Error $e) {
+            echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
+        }
     }
 
     /**

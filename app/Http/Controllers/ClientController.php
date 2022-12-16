@@ -125,4 +125,34 @@ class ClientController extends Controller
             echo '</br> <b> Exception Message: ' . $e->getMessage() . '</b>';
         }
     }
+
+    public function changePassword($id, Request $request)
+    {
+        $request->headers->set('Accept', 'application/json');
+        $passwordValidation = $request->validate([
+            "old_pwd" => ["required"],
+            "pwd" => ["required", "min:8", "max:100"],
+            "confirm_pwd" => ["required", "same:pwd"]
+        ]);
+
+        // if($passwordValidation->fails()){
+        //     return response()->json([
+        //         'message' => "Validation de changement de mdp échouée",
+        //         'errors' => $passwordValidation->errors()
+        //     ], 422);
+        // }
+
+        $client = Client::where("id", $id)->first();
+        if (!$client) return response(["message" => "aucun client de trouvé"], 401);
+        if (!Hash::check($passwordValidation["old_pwd"], $client->pwd)) {
+            return response(["message" => "le mot de passe ne correspond pas"], 401);
+        }
+
+        $client->update([
+            'pwd' => bcrypt($passwordValidation["pwd"])
+        ]);
+        return response([
+            "message" => "Mot de passe modifié"
+        ], 200);
+    }
 }
