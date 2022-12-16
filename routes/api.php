@@ -42,10 +42,16 @@ Route::put("/animal/{id}", [AnimalController::class, "updateAnimal"]);
 
 //Routes concernant les rendez-vous
 Route::get("/user/client/{id}/appointment", [AppointmentController::class, "getAppointmentOfOneClient"]);
+Route::post("/appointments", [AppointmentController::class, "createAppointment"]);
+Route::get("/animal/{id}/appointment/vaccine", [AppointmentController::class, "getLastVaccineAppointment"]);
 
 //Route pour l'envoi de mail
 Route::post('/send', [MailController::class, "index"]);
 
+
+
+Route::group(["middleware" => ['auth:sanctum']], function () {
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

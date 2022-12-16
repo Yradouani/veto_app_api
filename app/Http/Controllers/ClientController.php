@@ -15,8 +15,6 @@ class ClientController extends Controller
     //Ajouter un nouveau client
     public function addNewClient(Request $request)
     {
-        // return 'hello';
-
         try {
             $request->headers->set('Accept', 'application/json');
             $clientData = $request->validate([
